@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- main part -->
+    <group android:id="@+id/main_menu_main_group">
+        <item
+            android:id="@+id/load_sample"
+            android:title="@string/menu_load_sample"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/clear_image"
+            android:title="@string/menu_clear_image"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/solve_remotely"
+            android:checkable="true"
+            android:title="@string/menu_solve_remotely"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/check_server"
+            android:title="@string/check_server"
+            app:showAsAction="never"
+            android:contentDescription="@string/check_server_description"
+            />
+    </group>
+    <!-- results part -->
+    <item
+        android:id="@+id/solution"
+        android:title="@string/menu_solution"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/show_original_image"
+                android:title="@string/menu_show_original_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_resized_image"
+                android:title="@string/menu_show_resized_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_cropped_image"
+                android:title="@string/menu_show_cropped_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_grayscaled_image"
+                android:title="@string/menu_show_grayscaled_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_canny_image"
+                android:title="@string/menu_show_canny_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_dots_with_roads"
+                android:title="@string/menu_show_dots_with_roads"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_detected_objects_image"
+                android:title="@string/menu_show_detected_objects_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_solution_image"
+                android:title="@string/menu_show_solution_image"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/show_processing_error"
+                android:title="@string/menu_show_processing_error"
+                app:showAsAction="never" />
+        </menu>
+
+    </item>
+
+
+</menu>

@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Pet Detective Solver</string>
+
+    <string name="solve_button">Solve It!</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="menu_load_sample">Load sample</string>
+    <string name="menu_clear_image">Clear image</string>
+    <string name="menu_solve_remotely">Solve remotely</string>
+    <string name="check_server">Check server</string>
+    <string name="check_server_description">Check server for solution to the current puzzle</string>
+
+    <string name="menu_solution">Solution</string>
+    <string name="menu_show_original_image">Show original image</string>
+    <string name="menu_show_resized_image">Show resized image</string>
+    <string name="menu_show_cropped_image">Show cropped image</string>
+    <string name="menu_show_grayscaled_image">Show grayscaled image</string>
+    <string name="menu_show_canny_image">Show Canny-filtered image</string>
+    <string name="menu_show_dots_with_roads">Show image of dots with roads</string>
+    <string name="menu_show_detected_objects_image">Show image with detected objects</string>
+    <string name="menu_show_solution_image">Show solution image</string>
+    <string name="menu_show_processing_error">Show processing error</string>
+
+    <string name="toast_load_random_image">Image \'%1$s\' was loaded</string>
+    <string name="toast_processing_info_not_initialized">Processing information is not initialized, nothing to show</string>
+    <string name="toast_showing_stage_image">Image at %1$s stage</string>
+    <string name="toast_no_stage_image">There is no image at %1$s stage</string>
+    <string name="toast_no_errors">There were no errors while processing current image</string>
+
+    <string name="no_image_loaded">No loaded image to solve</string>
+    <string name="load_image_while_solving_task">Could not load image: solving task started, you have to wait it to finish</string>
+    <string name="clear_image_while_solving_task">Could not clear image: solving task started, you have to wait it to finish</string>
+    <string name="task_is_running">Solving task is running, waiting to finish</string>
+    <string name="task_starting">Starting solving task</string>
+    <string name="task_already_solved">Task already solved</string>
+    <string name="error_while_processing_current_image">Error while processing the image</string>
+    <string name="car_not_found">Pet Detective\'s car not found on image</string>
+
+    <!-- Checks -->
+    <string name="check_wrong_number_of_pets">Incorrect number of pet objects: found %1$d pet objects, while number of them should be between %2$d and %3$d (including pet houses and car)</string>
+    <string name="check_wrong_field_size">Non-supported values: found %1$d pet objects (including pet houses and car), and %2$d clean road intersections</string>
+    <string name="check_mandatory_pet_not_found">Level %1$d: mandatory for this level pet \'%2$s\' wasn\'t detected</string>
+    <string name="check_car_not_found">Level %1$d: mandatory car wasn\'t detected</string>
+    <string name="check_link_direction_up">up</string>
+    <string name="check_link_direction_down">down</string>
+    <string name="check_link_direction_left">left</string>
+    <string name="check_link_direction_right">right</string>
+    <string name="check_link_out_of_board">Position (%1$d, %2$d, object \'%3$s\') has incorrect %4$s link</string>
+    <string name="check_uncorrelated_links">Positions (%1$d, %2$d, object \'%3$s\') and (%4$d, %5$d, object \'%6$s\') have incorrect %7$s-%8$s interconnection</string>
+
+    <!--    -->
+    <string name="android_nougat_needed">Android Nougat at least is needed</string>
+    <string name="group_values_too_scattered">Values in the group by %1$s are too scattered: difference is of %2$d, while maximum allowed difference is %3$d</string>
+    <string name="gameboard_has_empty_values">Gameboard has empty values</string>
+    <string name="no_solution_found">Solution could not be found. Please contact author for app improvements if the image you are trying to solve is a valid image.</string>
+    <string name="main_image">Image to solve</string>
+
+    <!-- Error dialog message -->
+    <string name="error_dialog">%1$s. Last processed stage: %2$s. Detected objects are shown on the image.</string>
+
+    <!-- Server related part -->
+    <string name="puzzle_not_sent">Current puzzle either wasn\'t sent to server, or there was a problem sending it to server</string>
+    <string name="error_parsing_image">Error parsing received image</string>
+    <string name="no_solution_on_server">Server doesn\'t have solution for current puzzle, try check later.</string>
+</resources>
