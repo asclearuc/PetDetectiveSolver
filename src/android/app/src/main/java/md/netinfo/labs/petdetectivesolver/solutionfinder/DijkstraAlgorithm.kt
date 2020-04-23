@@ -5,7 +5,11 @@ import android.util.Log
 import md.netinfo.labs.petdetectivesolver.gameboard.SimpleGameBoardData
 import md.netinfo.labs.petdetectivesolver.resources.SharedGameObjects
 import md.netinfo.labs.petdetectivesolver.utils.MyPair
-import md.netinfo.labs.petdetectivesolver.utils.OrderedSet
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolutionFinder(gameboard) {
     @JvmField
@@ -48,28 +52,27 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
         solution = null
 
         // Maps from vertex to its distance (from start vertex)
-        var dist: MutableMap<ShortState, Int> = HashMap()
+        val dist: MutableMap<ShortState, Int> = HashMap()
         // Stores all vertices in ascending order of distance
-        var all: OrderedSet<MyPair<Int, State>> = OrderedSet(ArrayList())
+        val all: TreeSet<MyPair<Int, State>> = TreeSet()
 
         // number of moves
         movesCount = -1
 
         // Dijkstra
-        all.insert(MyPair(0, State(0, carPosC, carPosR, 4)))
+        val timeStart = LocalDateTime.now()
+        all.add(MyPair(0, State(0, carPosC, carPosR, 4)))
 
         var step = 0
         while (!all.isEmpty()) {
             // debug info
             step += 1
             if (step % 1000 == 1)
-                Log.d(TAG, "Step $step: there are ${all.items.size} possibilities to consider")
+                Log.d(TAG, "Step $step: there are ${all.size} possibilities to consider")
 
-            var curPair = all.min()!!
-            var cur: State = curPair.second
-            var l: Int = curPair.first
-
-            all.items.removeAt(0)
+            val curPair = all.pollFirst()!!
+            val cur: State = curPair.second
+            val l: Int = curPair.first
 
             // final vertex, done
             if (cur.mask == POWER_OF_3[numberOfPets] - 1) {
@@ -91,7 +94,7 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
                 // t = 2 if i-th animal is already returned home
                 val t: Int = getDigit(cur.mask, i)
                 var next: State? = null
-                var lNext: Int = 0
+                var lNext = 0
                 if (t == 0 && cur.cap > 0) {
                     // If we still have empty seat, try pick up this animal
                     next = State(setBit(cur.mask, i, 1), from[i].first, from[i].second, cur.cap - 1, cur)
@@ -103,15 +106,17 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
                 }
                 // add/replace if distance is lower
                 if (next!= null) {
-                    var nextShortState: ShortState =  next.getShortState()
-                    val existingDistance = dist.getOrDefault(nextShortState, HUGE_DISTANCE)
+                    val nextShortState: ShortState =  next.getShortState()
                     if (dist.getOrDefault(nextShortState, HUGE_DISTANCE) > lNext) {
                         dist[nextShortState] = lNext
-                        all.insert(MyPair(lNext, next))
+                        all.add(MyPair(lNext, next))
                     }
                 }
             }
         }
+        val timeFinish = LocalDateTime.now()
+        Log.d(TAG, "Step $step - all possibilities were processed")
+        Log.d(TAG, "Path lookup took ${ChronoUnit.MILLIS.between(timeStart, timeFinish)} ms")
 
         Log.d(TAG, "Found solution: $movesCount moves")
         return movesCount
@@ -147,7 +152,7 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
         numberOfRows = gameboard.gameboard[0].size
 
         // pet type - used below
-        var petList = ArrayList<String>()
+        val petList = ArrayList<String>()
 
         for (r in 0 until numberOfRows) {
             for(c in 0 until  numberOfCols) {
@@ -165,8 +170,8 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
                     // pet
                     else -> {
                         // get pet type (house/pet) and real pet name (Siamese, Husky...)
-                        var petType = o.name[0].toInt()
-                        var petName: String = o.name.substring(1, o.name.length - 1)
+                        val petType = o.name[0].toInt()
+                        val petName: String = o.name.substring(1, o.name.length - 1)
 
                         // check if such pet is already in the list, if not - add new
                         var petId = petList.indexOf(petName)
@@ -281,14 +286,15 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
         /** Required by HashMap for correct comparison */
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
-            if (javaClass != other?.javaClass) return false
+            if (other == null ) return false
+            if (javaClass != other.javaClass) return false
             other as ShortState
             return (mask == other.mask && c == other.c && r == other.r && cap == other.cap)
         }
 
         /** Required by HashMap for correct comparison */
         override fun hashCode(): Int {
-            return (((mask.hashCode() * 31 + c.hashCode()) * 31 + r.hashCode()) * 31 + cap.hashCode())
+            return Objects.hash(mask, c, r, cap)
         }
     }
 
@@ -303,14 +309,15 @@ open class DijkstraAlgorithm(gameboard: SimpleGameBoardData) : GameboardSolution
         /** Required by HashMap for correct comparison */
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
-            if (javaClass != other?.javaClass) return false
+            if (other == null ) return false
+            if (javaClass != other.javaClass) return false
             other as State
             return (super.equals(other as ShortState) && prevMove == other.prevMove)
         }
 
         /** Required by HashMap for correct comparison */
         override fun hashCode(): Int {
-            return super.hashCode() * 31 + prevMove.hashCode()
+            return Objects.hash(this as ShortState, prevMove)
         }
 
         fun getShortState(): ShortState {
